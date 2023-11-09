@@ -4,7 +4,6 @@ using Authnz.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +17,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApiDbContext>();
+
+
+// builder.Services.AddDbContext<ApiDbContext>(options => 
+//     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
+// for appsettings json:
+// "DefaultConnection": "Server=db; Port=3306; Database=MovieReviewer; User ID=root; Password=root;"
+
 
 builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
